@@ -1,3 +1,67 @@
+"""
+ lfsr_project.py
+ AUTHORS:
+ K.Draziotis (3-3-2016): initial version
+ 
+ TESTS:In the example below we use function lfsr in order to compute the keysrteam of an lfsr given the initial seed, [1,1,0,0]
+ and the feedback function [0,0,1,1] which correspomds to the feedback polynomial x^4+x^3+1. the third argument is an integer, which
+ count the number of keystream bits and the if the fourth argument is 0 prints the interior stages of the lfsr eles only 
+ the keystream is printed.
+ 
+ lfsr([1,1,1,0],[0,0,1,1],15,0)
+ 	initial seed : deque([1, 1, 1, 0])
+	state 1 of the lfsr : deque([1, 1, 1, 1])
+	state 2 of the lfsr : deque([0, 1, 1, 1])
+	state 3 of the lfsr : deque([0, 0, 1, 1])
+	state 4 of the lfsr : deque([0, 0, 0, 1])
+	state 5 of the lfsr : deque([1, 0, 0, 0])
+	state 6 of the lfsr : deque([0, 1, 0, 0])
+	state 7 of the lfsr : deque([0, 0, 1, 0])
+	state 8 of the lfsr : deque([1, 0, 0, 1])
+	state 9 of the lfsr : deque([1, 1, 0, 0])
+	state 10 of the lfsr : deque([0, 1, 1, 0])
+	state 11 of the lfsr : deque([1, 0, 1, 1])
+	state 12 of the lfsr : deque([0, 1, 0, 1])
+	state 13 of the lfsr : deque([1, 0, 1, 0])
+	state 14 of the lfsr : deque([1, 1, 0, 1])
+	state 15 of the lfsr : deque([1, 1, 1, 0])
+[0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1]
+
+The next function text_enc(a string) conver the string to a binary sequence accordin to a five-bit dictionary.
+
+text = 'helloandgoodbuy'
+text_enc(text)
+
+	'001110010001011010110111000000011010001100110011100111000011000011010011000'
+	
+The inverse function is text_dec(a binary string)
+
+text_dec('0011100100010110101101110')
+	'hello'
+	
+Also the function string_xor( a binary string,a binary string) add bit by bit the bits from the two strings
+
+string_xor(text_enc('hello'),key)
+
+	'0110110001000011111000100'
+
+
+ REFERENCES: 
+ 
+"""
+
+
+#*****************************************************************************
+#       Copyright (C) 2015 K.Draziotis <drazioti@gmail.com>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#  as published by the Free Software Foundation; either version 2 of
+#  the License, or (at your option) any later version.
+#                  http://www.gnu.org/licenses/
+#*****************************************************************************
+
+
+
 aDict = dict(zip('abcdefghijklmnopqrstuvwxyz.!?()-ABCDEFGHIJKLMNOPQRSTUVWXYZ', 
                               ['00000','00001','00010','00011','00100',
                               '00101','00110','00111','01000',
