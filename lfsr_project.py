@@ -3,6 +3,8 @@
  AUTHORS:
  K.Draziotis (3-3-2016): initial version
  
+ Tested in python 3
+ 
  TESTS:In the example below we use function lfsr in order to compute the keysrteam of an lfsr given the initial seed, [1,1,0,0]
  and the feedback function [0,0,1,1] which correspomds to the feedback polynomial x^4+x^3+1. the third argument is an integer, which
  count the number of keystream bits and the if the fourth argument is 0 prints the interior stages of the lfsr eles only 
