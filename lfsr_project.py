@@ -10,7 +10,7 @@
  count the number of keystream bits and the if the fourth argument is 0 prints the interior stages of the lfsr eles only 
  the keystream is printed.
  
- lfsr([1,1,1,0],[0,0,1,1],15,0)
+>lfsr([1,1,1,0],[0,0,1,1],15,0)
  	initial seed : deque([1, 1, 1, 0])
 	state 1 of the lfsr : deque([1, 1, 1, 1])
 	state 2 of the lfsr : deque([0, 1, 1, 1])
@@ -29,26 +29,29 @@
 	state 15 of the lfsr : deque([1, 1, 1, 0])
 [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1]
 
-The next function text_enc(a string) conver the string to a binary sequence accordin to a five-bit dictionary.
-
-text = 'helloandgoodbuy'
-text_enc(text)
+The next function : 
+	text_enc(a string) 
+converts the string to a binary sequence according to a five-bit dictionary.
+Example:
+>text = 'helloandgoodbuy'
+>text_enc(text)
 
 	'001110010001011010110111000000011010001100110011100111000011000011010011000'
 	
-The inverse function is text_dec(a binary string)
-
-text_dec('0011100100010110101101110')
+The inverse function of the previous function is : 
+	text_dec(a binary string)
+Example:
+>text_dec('0011100100010110101101110')
 	'hello'
 	
 Also the function string_xor( a binary string,a binary string) add bit by bit the bits from the two strings
+Example:
+>key='1'*25;
+>string_xor(text_enc('hello'),key)
 
-string_xor(text_enc('hello'),key)
+	'1100011011101001010010001'
+	
 
-	'0110110001000011111000100'
-
-
- REFERENCES: 
  
 """
 
