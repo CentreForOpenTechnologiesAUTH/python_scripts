@@ -136,11 +136,11 @@ def sumxor(l):
         r = r^v
     return r
 
-# the function lfsr accept three arguments
+# the function lfsr accepts three arguments
 # seed : a binary list of the form [0,1,1,1,0,1,0,1,...] which is the initial seed
-# feedback : a binary list which defined the feedback polynomail 
+# feedback : a binary list which defined by the feedback polynomail 
 # for instance [0,0,1,1]-->x^4+x^3+1
-# bits : is an integer, which telles the function to return bits-number if the stream of lfsr
+# bits : is an integer, which tells the function to return bits-number if the stream of lfsr
 # the function prints the internal states if flag = 0 and always returns the output
 
 def lfsr(seed,feedback,bits, flag):
