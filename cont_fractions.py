@@ -3,24 +3,38 @@
 
  AUTHORS:
 
- K.Draziotis (26-5-2015): initial version
+ K. Draziotis (26-5-2015): initial version
+ Stavros Mekesis (16-4-2016): refactoring and performance improvement
 
 
+ EXAMPLES: continued_fraction(821112,28062010)
+           [0, 34, 5, 1, 2, 3, 1, 2, 2, 1, 1, 4, 1, 30, 2]
 
- TESTS: conf(22,23)
-        [0,1,22]
-        
-        conv(22,23)
-        [0,1,22/23]
-
+           convergents(continued_fraction(821112,28062010))
+           [Fraction(0, 1),
+            Fraction(1, 34),
+            Fraction(5, 171),
+            Fraction(6, 205),
+            Fraction(17, 581),
+            Fraction(57, 1948),
+            Fraction(74, 2529),
+            Fraction(205, 7006),
+            Fraction(484, 16541),
+            Fraction(689, 23547),
+            Fraction(1173, 40088),
+            Fraction(5381, 183899),
+            Fraction(6554, 223987),
+            Fraction(202001, 6903509),
+            Fraction(410556, 14031005)]
 
  REFERENCES: The joy of factoring, S.S.Wagstaff, Jr. AMS
- 
+
 """
 
 
 #*****************************************************************************
-#       Copyright (C) 2015 K.Draziotis <drazioti@gmail.com>
+#       Copyright (C) 2015 K.Draziotis <drazioti@gmail.com>,
+#                          Stavros Mekesis <mekstav@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
@@ -29,45 +43,31 @@
 #*****************************************************************************
 
 
-import math
-import mpmath
-from sympy.mpmath import *
-from sympy import Rational
-from mpmath import *
-from mpmath import mp
-mp.dps=800;
-def conf(a,b):
-    i=0
-    q1=[]
-    q1.append(Rational(0,1))
-    x=Rational(int(a),int(b))
-    q=Rational(int(floor(x)),int(1))
-    x=x-q
-    while(x>0):
-        q1.append(int(floor(Rational(1,x))))
-        x=1/x-q1[i+1]
-        i=i+1
-    return q1
+from fractions import Fraction
+from functools import reduce
 
-### convergent by classical theorems
-def P(n,a,b):
-    if n == 0:
-        return 1
-    elif n == 1:
-        return 0
-    else:
-        return conf(a,b)[n-1]*P(n-1,a,b)+P(n-2,a,b)
-### convergent by classical theorems
-def Q(n,a,b):
-    if n == 0:
-        return 0
-    elif n == 1:
-        return 1
-    else:
-        return conf(a,b)[n-1]*Q(n-1,a,b)+Q(n-2,a,b)
-### convergent -- very slow
-def conv(a,b):
-    c=[];i=0;
-    for i in range(len(conf(a,b))):
-        c.append(Rational(P(i+1,a,b),Q(i+1,a,b)))
-    return c
+
+def continued_fraction(p, q):
+    """Returns the finite continued fraction of p/q as a list."""
+    cf = []
+    while q:
+        cf.append(p // q)
+        p, q = q, p % q
+    return cf
+
+
+def convergents(cf):
+    """Returns the list of convergents of the finite continued fraction cf."""
+    return [_convergent(partial) for partial in _inits(cf)]
+
+
+def _convergent(cf):
+    """Returns the last convergent to the finite continued fraction cf."""
+    cf.reverse()
+    cf[0] = Fraction(cf[0])
+    return reduce(lambda a, b: b + 1 / a, cf)
+
+
+def _inits(L):
+    """Returns a generator of initial segments of L, shortest first."""
+    return (L[:i] for i in range(1, len(L) + 1))
