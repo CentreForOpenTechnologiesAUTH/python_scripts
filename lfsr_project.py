@@ -5,9 +5,9 @@
  
  Tested in python 2 and python 3.
  
- TESTS:In the example below we use the function 'lfsr' in order to compute the keysrteam of an lfsr given the initial seed : [1,1,0,0]
- and the feedback function : [0,0,1,1], which correspomds to the feedback polynomial x^4+x^3+1. The third argument is an integer, which
- counts the number of the keystream bits. Further, if the fourth argument is 0 prints the interior stages of the lfsr else only 
+ TESTS:In the example below we use the function 'lfsr' in order to compute the keysrteam of an lfsr given the initial seed say [1,1,0,0]
+ and the feedback function say [0,0,1,1], which corresponds to the feedback polynomial x^4+x^3+1. The third argument is an integer, which
+ counts the number of the keystream bits. Further, if the fourth argument is 0 prints the interior states of the lfsr, else only 
  the keystream is printed.
  
 >lfsr([1,1,1,0],[0,0,1,1],15,0)
@@ -31,31 +31,27 @@
 
 The next function : 
 	text_enc(a string) 
-converts the string to a binary sequence according to a five-bit dictionary.
+converts the string to a binary sequence according to a five-bit dictionary defined below.
 Example:
 >text = 'helloandgoodbuy'
 >text_enc(text)
 
 	'001110010001011010110111000000011010001100110011100111000011000011010011000'
 	
-The inverse function of the previous function is : 
+The inverse of the previous function is : 
 	text_dec(a binary string)
 Example:
 >text_dec('0011100100010110101101110')
 	'hello'
 	
-Also the function string_xor( a binary string,a binary string) add bit by bit the bits from the two strings
+Finally, the function string_xor( a binary string,a binary string) xor's, bit by bit, the bits from the two strings
 Example:
 >key='1'*25;
 >string_xor(text_enc('hello'),key)
 
 	'1100011011101001010010001'
 	
-
- 
 """
-
-
 #*****************************************************************************
 #       Copyright (C) 2015 K.Draziotis <drazioti@gmail.com>
 #
@@ -140,7 +136,7 @@ def sumxor(l):
 # seed : a binary list of the form [0,1,1,1,0,1,0,1,...] which is the initial seed
 # feedback : a binary list which defined by the feedback polynomail 
 # for instance [0,0,1,1]-->x^4+x^3+1
-# bits : is an integer, which tells the function to return bits-number if the stream of lfsr
+# bits : is an integer, which tells the function to return bits-number of the resulting stream of the lfsr
 # the function prints the internal states if flag = 0 and always returns the output
 
 def lfsr(seed,feedback,bits, flag):
