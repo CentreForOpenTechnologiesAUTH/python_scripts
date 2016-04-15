@@ -5,10 +5,9 @@
  
  Tested in python 2 and python 3.
  
- TESTS:In the example below we use the function 'lfsr' in order to compute the keysrteam of an lfsr given the initial seed say [1,1,0,0]
- and the feedback function say [0,0,1,1], which corresponds to the feedback polynomial x^4+x^3+1. The third argument is an integer, which
- counts the number of the keystream bits. Further, if the fourth argument is 0 prints the interior states of the lfsr, else only 
- the keystream is printed.
+ TESTS:In the example below we use the function 'lfsr' to compute the keysrteam of an lfsr given the initial seed 
+ and a feedback function1. It accepts a third argument which counts the number of the keystream bits. 
+ Furthermore, if the fourth argument is 0 prints the interior states of the lfsr, else only the keystream is printed.
  
 >lfsr([1,1,1,0],[0,0,1,1],15,0)
  	initial seed : deque([1, 1, 1, 0])
