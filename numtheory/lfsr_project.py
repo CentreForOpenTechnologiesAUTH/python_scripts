@@ -6,7 +6,7 @@
  Tested in python 2 and python 3.
  
  TESTS:In the example below we use the function 'lfsr' to compute the keysrteam of an lfsr given the initial seed 
- and a feedback function1. It accepts a third argument which counts the number of the keystream bits. 
+ and a feedback function. It accepts a third argument which counts the number of the keystream bits. 
  Furthermore, if the fourth argument is 0 prints the interior states of the lfsr, else only the keystream is printed.
  
 >lfsr([1,1,1,0],[0,0,1,1],15,0)
@@ -43,7 +43,7 @@ Example:
 >text_dec('0011100100010110101101110')
 	'hello'
 	
-Alos, the function string_xor( a binary string,a binary string) xor's, bit by bit, the bits from the two strings
+Also, the function string_xor( a binary string,a binary string) xor's, bit by bit, the bits from the two strings
 Example:
 >key='1'*25;
 >string_xor(text_enc('hello'),key)
@@ -51,16 +51,15 @@ Example:
 	'1100011011101001010010001'
 	
 Say for instance that you want to encrypt the text 'Simplecanbeharderthancomplex' with an lfsr defined by the seed
-[1,,1,0,0,1,0,1,0,1,1] and the feedback polynomial : x^10+x^9+x^7+x^6+1.
+[0,0,0,0,1,0,1,0,1,1] and the feedback polynomial : x^10+x^9+x^7+x^6+1.
 
 >text = 'Simplecanbeharderthancomplex'
 >streambits = text_enc(text)
->initial_seed = [1,1,0,0,1,0,1,0,1,1]
+>initial_seed = [0,0,0,0,1,0,1,0,1,1]
 >O = lfsr(initial_seed,[0,0,0,0,0,1,1,0,1,1],len(streambits),1)
 >keystream = list_to_string(O)
-110101001110010100010101101100100001100111011110
-010111010111011011010000001111001001101000110111
-00100100100000000110000101101111100011010000
+>text_dec(string_xor(text_enc(text),keystream))
+'iy-t)ocojaiz(lwu!egr!ghglgn)'
 
 """
 #*****************************************************************************
@@ -163,7 +162,7 @@ def lfsr(seed,feedback,bits, flag):
     if flag==0:
         print('initial seed :',seed)
     for i in range(bits):
-        xor = sumxor([seed[i] for i in feedback_new])
+        xor = sumxor([seed[j] for j in feedback_new])
         output.append(seed.pop()) #extract to output the right-most bit of current seed
         seed.appendleft(xor)      #insert from left the result of the previous xor 
         if flag==0:
